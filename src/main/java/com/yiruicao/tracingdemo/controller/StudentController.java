@@ -53,34 +53,34 @@ public class StudentController {
     @WithSpan
     public String saveStudent(@RequestBody @SpanAttribute("student") Student student, @RequestHeader HttpHeaders httpHeaders) {
         LOGGER.info("Reached save student method...");
-        Span span = tracer.spanBuilder("Controller.saveStudent").startSpan();
-        span.setAttribute("name", student.getName());
-        span.setAttribute("age", student.getAge());
+//        Span span = tracer.spanBuilder("Controller.saveStudent").startSpan();
+//        span.setAttribute("name", student.getName());
+//        span.setAttribute("age", student.getAge());
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
             studentService.addStudentService(student);
             return "Success!";
         } finally {
             LOGGER.info("Save student exited...");
-            span.end();
+//            span.end();
         }
     }
 
     @PostMapping("/student/saveAsync")
     public String saveStudentAsync(@RequestBody @SpanAttribute("student") Student student, @RequestHeader HttpHeaders httpHeaders) {
         LOGGER.info("Reached save student async method...");
-        Span span = tracer.spanBuilder("Controller.saveStudentAsync").startSpan();
-        span.setAttribute("name", student.getName());
-        span.setAttribute("age", student.getAge());
+//        Span span = tracer.spanBuilder("Controller.saveStudentAsync").startSpan();
+//        span.setAttribute("name", student.getName());
+//        span.setAttribute("age", student.getAge());
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
             studentService.addTwoStudentService(student);
             return "Success!";
         } finally {
             LOGGER.info("Save student Async exited...");
-            span.end();
+//            span.end();
         }
     }
 
@@ -103,10 +103,10 @@ public class StudentController {
     @GetMapping("/student/get/indirectly")
     public String getStudentIndirectly(@RequestParam String name) throws MalformedURLException {
         LOGGER.info("Reached get student age indirectly...");
-        Span span = tracer.spanBuilder("Controller.getStudentAgeIndirectly").setSpanKind(SpanKind.CLIENT).startSpan();
-        span.setAttribute("name", name);
+//        Span span = tracer.spanBuilder("Controller.getStudentAgeIndirectly").setSpanKind(SpanKind.CLIENT).startSpan();
+//        span.setAttribute("name", name);
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
             WebClient.UriSpec<WebClient.RequestBodySpec> uriSpec = webClient.method(HttpMethod.GET);
             WebClient.RequestBodySpec bodySpec = uriSpec.uri(uriBuilder -> uriBuilder
@@ -118,7 +118,7 @@ public class StudentController {
             return integer;
         } finally {
             LOGGER.info("Leaving get student age indirectly...");
-            span.end();
+//            span.end();
         }
     }
 }

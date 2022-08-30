@@ -35,36 +35,36 @@ public class StudentServiceImpl implements StudentService{
     @Override
     @WithSpan
     public void addStudentService(@SpanAttribute("student") Student student) {
-        Span span = tracer.spanBuilder("StudentService.addStudentService").startSpan();
-        span.setAttribute("name", student.getName());
-        span.setAttribute("age", student.getAge());
+//        Span span = tracer.spanBuilder("StudentService.addStudentService").startSpan();
+//        span.setAttribute("name", student.getName());
+//        span.setAttribute("age", student.getAge());
         LOGGER.info("Entering addStudentService...");
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
             studentDAO.addStudentDAO(student);
         } finally {
             LOGGER.info("Exiting addStudentService...");
-            span.end();
+//            span.end();
         }
     }
 
     @Override
     @WithSpan
     public void addTwoStudentService(@SpanAttribute("student") Student student) {
-        Span span = tracer.spanBuilder("StudentService.addTwoStudentService").startSpan();
-        span.setAttribute("name", student.getName());
-        span.setAttribute("age", student.getAge());
+//        Span span = tracer.spanBuilder("StudentService.addTwoStudentService").startSpan();
+//        span.setAttribute("name", student.getName());
+//        span.setAttribute("age", student.getAge());
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
-            SpanContext spanContext = span.getSpanContext();
+//            SpanContext spanContext = span.getSpanContext();
             CompletableFuture<Void> f1 = getWithLatencyFuture(student);
             CompletableFuture<Void> f2 = getWithoutLatencyFuture(student);
             f1.runAfterBoth(f2, () -> LOGGER.info("Both tasks finished..."));
         } finally {
             LOGGER.info("addTwoStudentService exited...");
-            span.end();
+//            span.end();
         }
     }
 

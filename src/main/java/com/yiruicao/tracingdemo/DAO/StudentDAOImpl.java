@@ -33,16 +33,16 @@ public class StudentDAOImpl implements StudentDAO{
     @WithSpan
     public void addStudentDAO(@SpanAttribute("student") Student student) {
         LOGGER.info("Entering addStudentDAO...");
-        Span span = tracer.spanBuilder("StudentDAO.addStudent").startSpan();
-        span.setAttribute("name", student.getName());
-        span.setAttribute("age", student.getAge());
+//        Span span = tracer.spanBuilder("StudentDAO.addStudent").startSpan();
+//        span.setAttribute("name", student.getName());
+//        span.setAttribute("age", student.getAge());
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
             redisTemplate.opsForValue().set(student.getName(), Integer.toString(student.getAge()), Duration.ofMinutes(1));
         } finally {
             LOGGER.info("addStudentDAO exited...");
-            span.end();
+//            span.end();
         }
     }
 
@@ -50,33 +50,33 @@ public class StudentDAOImpl implements StudentDAO{
     @WithSpan
     public void addStudentDAOWithLatency(@SpanAttribute("student") Student student) throws InterruptedException {
         LOGGER.info("Entering addStudentDAOWithLatency...");
-        Span span = tracer.spanBuilder("StudentDAO.addStudentWithLatency").startSpan();
-        span.setAttribute("name", student.getName());
-        span.setAttribute("age", student.getAge());
+//        Span span = tracer.spanBuilder("StudentDAO.addStudentWithLatency").startSpan();
+//        span.setAttribute("name", student.getName());
+//        span.setAttribute("age", student.getAge());
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
             Thread.sleep(3000);
             redisTemplate.opsForValue().set(student.getName() + "Latency", Integer.toString(student.getAge()), Duration.ofMinutes(1));
         } finally {
             LOGGER.info("addStudentDAOWithLatency exited...");
-            span.end();
+//            span.end();
         }
     }
 
     @Override
     public Integer getAge(@SpanAttribute String name) {
         LOGGER.info("Entering getAge...");
-        Span span = tracer.spanBuilder("StudentDAO.getAge").startSpan();
-        span.setAttribute("name", name);
+//        Span span = tracer.spanBuilder("StudentDAO.getAge").startSpan();
+//        span.setAttribute("name", name);
         try
-                (Scope scope = span.makeCurrent())
+//                (Scope scope = span.makeCurrent())
         {
             Object ageObject = redisTemplate.opsForValue().get(name);
             return Integer.parseInt(ageObject.toString());
         } finally {
             LOGGER.info("Exiting getAge...");
-            span.end();
+//            span.end();
         }
     }
 }
