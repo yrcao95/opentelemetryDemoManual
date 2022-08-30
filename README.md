@@ -11,3 +11,11 @@ docker run --rm -it --name jaeger\
 
 This starts a jaeger instance that listens on port 14250 where our application will
 pass the tracing to. Afterwards, simply start up the application and go to http://localhost:14250
+
+To demonstrate automatic instrumentation, check out the branch "automatic", and run the following the command (with the jaeger up):
+```
+# This creates the jar package in the /target folder
+mvn clean package
+# Run the jar package with the java agent
+java -javaagent:./src/main/resources/opentelemetry-javaagent.jar -Dotel.traces.exporter=jaeger -Dotel.service.name=tracingDemoAgent -jar ./target/tracingDemo-0.0.1-SNAPSHOT.jar
+```
