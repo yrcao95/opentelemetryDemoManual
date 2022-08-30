@@ -10,7 +10,7 @@ docker run --rm -it --name jaeger\
 ```
 
 This starts a jaeger instance that listens on port 14250 where our application will
-pass the tracing to. Afterwards, simply start up the application and go to http://localhost:14250
+pass the tracing to. Afterwards, simply start up the application and go to http://localhost:16686
 
 To demonstrate automatic instrumentation, check out the branch "automatic", and run the following the command (with the jaeger up):
 ```
